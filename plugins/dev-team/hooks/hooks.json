@@ -1,0 +1,20 @@
+{
+  "description": "dev-team: blocks role agents from editing files outside their ownership (.dev-team/ownership.json) and records each agent's model and token usage in .dev-team/costs.jsonl.",
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit|NotebookEdit",
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/ownership_guard.py\"", "timeout": 10 }
+        ]
+      }
+    ],
+    "SubagentStop": [
+      {
+        "hooks": [
+          { "type": "command", "command": "python3 \"${CLAUDE_PLUGIN_ROOT}/hooks/cost_tracker.py\"", "timeout": 20 }
+        ]
+      }
+    ]
+  }
+}
