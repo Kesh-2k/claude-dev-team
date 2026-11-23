@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Todos</title></head>
+<body>
+<h1>Todos</h1>
+<form id="add-form" novalidate style="margin:.5em 0">
+  <label for="title">New todo</label>
+  <input id="title" name="title" type="text" maxlength="120" autocomplete="off" aria-describedby="error">
+  <button id="add-btn" type="submit">Add</button>
+  <p id="error" role="alert" style="color:#b00020"></p>
+</form>
+<ul id="list"></ul>
+<script>
+const list = document.getElementById('list');
+const form = document.getElementById('add-form');
+const input = document.getElementById('title');
+const btn = document.getElementById('add-btn');
+const errorEl = document.getElementById('error');
+let busy = false;
+
+function renderItem(todo) {
+  const li = document.createElement('li');
+  li.textContent = todo.title;
+  list.appendChild(li);
+}
+
+function showError(msg, invalid) {
+  errorEl.textContent = msg;
+  if (invalid) input.setAttribute('aria-invalid', 'true');
+  else input.removeAttribute('aria-invalid');
+}
+
+function clearError() {
+  errorEl.textContent = '';
+  input.removeAttribute('aria-invalid');
+}
+
+input.addEventListener('input', () => input.removeAttribute('aria-invalid'));
+
+form.addEventListener('submit', async (e) => {
+  e.preventDefault();
+  if (busy) return;
+  clearError();
+  const title = input.value.trim();
+  if (!title) {
+    showError('Enter a title.', true);
+    input.focus();
+    return;
+  }
+  busy = true;
+  btn.disabled = true;
+  btn.textContent = 'Adding...';
+  try {
+    const res = await fetch('/api/todos', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ title })
+    });
+    const body = await res.json();
+    if (res.ok) {
+      renderItem(body);
+      input.value = '';
+      clearError();
+    } else {
+      const msg = body && typeof body.error === 'string' && body.error ? body.error : 'Could not add the todo. Try again.';
+      showError(msg, true);
+    }
+    input.focus();
+  } catch {
+    showError('Could not reach the server. Check your connection and try again.', false);
+  } finally {
+    busy = false;
+    btn.disabled = false;
+    btn.textContent = 'Add';
+  }
+});
+
+fetch('/api/todos').then(r => r.json()).then(ts => ts.forEach(renderItem)).catch(() => {});
+</script>
+</body>
+</html>
