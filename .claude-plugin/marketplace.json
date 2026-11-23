@@ -1,0 +1,14 @@
+{
+  "$schema": "https://anthropic.com/claude-code/marketplace.schema.json",
+  "name": "claude-dev-team",
+  "description": "A complete software development team of specialized agents for Claude Code.",
+  "owner": { "name": "Kesh-2k", "url": "https://github.com/Kesh-2k" },
+  "plugins": [
+    {
+      "name": "dev-team",
+      "description": "Product Manager, Tech Lead, Architect, UI/UX, Backend, Frontend, Mobile, Data/DBA, QA and DevOps/SRE agents orchestrated by the /dev-team skill.",
+      "source": "./plugins/dev-team",
+      "category": "development"
+    }
+  ]
+}

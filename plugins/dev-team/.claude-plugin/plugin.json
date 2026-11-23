@@ -1,0 +1,10 @@
+{
+  "name": "dev-team",
+  "version": "1.0.0",
+  "description": "A complete software development team for Claude Code: Product Manager, Tech Lead, Architect, UI/UX, Backend, Frontend, Mobile, Data/DBA, QA and DevOps/SRE agents, orchestrated by one skill from idea to tested, reviewed, ready-to-ship code.",
+  "author": { "name": "Kesh-2k", "url": "https://github.com/Kesh-2k" },
+  "homepage": "https://github.com/Kesh-2k/claude-dev-team",
+  "repository": "https://github.com/Kesh-2k/claude-dev-team",
+  "license": "MIT",
+  "keywords": ["agents", "subagents", "software-team", "product-manager", "tech-lead", "architecture", "qa", "devops", "workflow", "skills"]
+}
