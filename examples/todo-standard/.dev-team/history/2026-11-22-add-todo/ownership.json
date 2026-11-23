@@ -1,0 +1,5 @@
+{
+  "backend-developer": ["src/**", "test/todos.test.js", "test/server.test.js"],
+  "frontend-developer": ["web/**", "test/web.test.js"],
+  "qa-engineer": ["test/qa-*.test.js", ".dev-team/test-plan.md", ".dev-team/qa-report.md"]
+}
